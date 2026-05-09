@@ -1,100 +1,147 @@
-const cartas = ["🍎","🍎","🍌","🍌","🍇","🍇","🍓","🍓"];
-let firstCard = null;
-let secondCard = null;
-let lockBoard = false;
-let erros = 0;
-let pares = 0;
-//Seleciona o tabuleiro do jogo;
-const gameBoard = document.querySelector('#gameBoard');
-//Chama a função para reiniciar o jogo quando o botão for clicado;
-document.querySelector('#resetButton').addEventListener('click', reiniciarJogo);
-//Resetar as cartas para o estado inicial;
+// Array de cartas (pares de frutas);
+const cartas = [
+  "🍎",
+  "🍎",
+  "🍌",
+  "🍌",
+  "🍇",
+  "🍇",
+  "🍓",
+  "🍓",
+  "🍊",
+  "🍊",
+  "🍉",
+  "🍉",
+  "🍋",
+  "🍋",
+  "🍑",
+  "🍑",
+  "🍒",
+  "🍒",
+  "🥝",
+  "🥝",
+];
+// Configurações dos níveis (quantidade de pares);
+const niveis = [
+  { level: 1, pares: 2 },
+  { level: 2, pares: 4 },
+  { level: 3, pares: 6 },
+  { level: 4, pares: 8 },
+  { level: 5, pares: 10 },
+];
+// Variáveis de controle do jogo;
+let firstCard = null,
+  secondCard = null,
+  lockBoard = false,
+  erros = 0,
+  pares = 0,
+  level = 1;
+
+const gameBoard = document.querySelector("#gameBoard");
+document.querySelector("#resetButton").addEventListener("click", reiniciarJogo);
+document.querySelector("#nextButton").addEventListener("click", proximoNivel);
+// Função para resetar as cartas selecionadas e desbloquear o tabuleiro;
 function resetarCartas() {
-    firstCard = null;
-    secondCard = null;
-    lockBoard = false;
+  firstCard = null;
+  secondCard = null;
+  lockBoard = false;
 }
-//Verificar se as cartas são iguais;
+// Função para verificar se as cartas selecionadas formam um par;
 function verificarPar() {
-    if (firstCard.dataset.value === secondCard.dataset.value) {
-        firstCard.classList.add('iguais');
-        secondCard.classList.add('iguais');
-        firstCard.disabled = true;
-        secondCard.disabled = true;
-        pares++;
-        verificarVitoria();
-        resetarCartas();
-    } else {
-        lockBoard = true;
-        erros++;
-        document.querySelector('#erros').textContent = 'Erros: ' + erros;
-        setTimeout(() => {
-            firstCard.textContent = '?';
-            secondCard.textContent = '?';
-            resetarCartas();
-        }, 900);
-    }
+  if (firstCard.dataset.value === secondCard.dataset.value) {
+    firstCard.classList.add("iguais");
+    secondCard.classList.add("iguais");
+    firstCard.disabled = true;
+    secondCard.disabled = true;
+    pares++;
+    verificarVitoria();
+    resetarCartas();
+  } else {
+    lockBoard = true;
+    erros++;
+    document.querySelector("#erros").textContent = "Erros: " + erros;
+    setTimeout(() => {
+      firstCard.textContent = "?";
+      secondCard.textContent = "?";
+      resetarCartas();
+    }, 900);
+  }
 }
-//Criar cartas;
+// Função para criar as cartas no tabuleiro de acordo com o nível atual;
 function criarCartas() {
-    for (let i = 0; i < cartas.length; i++) {
-        const carta = document.createElement('button');
-        carta.classList.add('carta');
-        carta.dataset.value = cartas[i];
-        carta.textContent = '?';
-        gameBoard.appendChild(carta);
-        carta.addEventListener('click', function() {
-            if (lockBoard) return;
-            if (carta === firstCard) return;
-            carta.textContent = carta.dataset.value;
-            if (firstCard === null) {
-                firstCard = carta;
-            } else{
-                secondCard = carta;
-                verificarPar();
-            }
-        });
-    }
+  const config = niveis[level - 1];
+  const cartasDoNivel = cartas.slice(0, config.pares * 2);
+  for (let i = cartasDoNivel.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cartasDoNivel[i], cartasDoNivel[j]] = [cartasDoNivel[j], cartasDoNivel[i]];
+  }
+  for (let i = 0; i < cartasDoNivel.length; i++) {
+    const carta = document.createElement("button");
+    carta.classList.add("carta");
+    carta.dataset.value = cartasDoNivel[i];
+    carta.textContent = "?";
+    gameBoard.appendChild(carta);
+    carta.addEventListener("click", function () {
+      if (lockBoard) return;
+      if (carta === firstCard) return;
+      carta.textContent = carta.dataset.value;
+      if (firstCard === null) {
+        firstCard = carta;
+      } else {
+        secondCard = carta;
+        verificarPar();
+      }
+    });
+  }
 }
-//Embaralhar as cartas;
-function embaralharCartas() {
-    for (let i = cartas.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * cartas.length);
-        [cartas[i], cartas[j]] = [cartas[j], cartas[i]];
-    }
-}
-//Reiniciar o jogo;
-function reiniciarJogo() {
-    // reseta variáveis;
+// Função para avançar para o próximo nível, resetando o tabuleiro e atualizando as informações do jogo;
+function proximoNivel() {
+  if (level < 5) {
+    level++;
+    pares = 0;
     firstCard = null;
     secondCard = null;
     lockBoard = false;
-    erros = 0;
-    pares = 0;
-
-    // reseta o contador na tela;
-    document.querySelector('#erros').textContent = 'Erros: 0';
-    // remove a mensagem de vitória, se existir;
-    const msg = document.querySelector('#vitoriaMessage');
+    const msg = document.querySelector("#vitoriaMessage");
     if (msg) msg.remove();
-    // limpa o tabuleiro;
-    gameBoard.innerHTML = '';
-
-    // embaralha e cria de novo;
-    embaralharCartas();
+    gameBoard.innerHTML = "";
+    document.querySelector("#nextButton").style.display = "none";
+    document.querySelector("#levelInfo").textContent = "Nível: " + level;
     criarCartas();
-    // esconde o botão de reset;
-    document.querySelector('#resetButton').style.display = 'none';
+  }
 }
-//Verificar se o jogo foi concluído;
+// Função para reiniciar o jogo, resetando todas as variáveis e o tabuleiro para o estado inicial;
+function reiniciarJogo() {
+  firstCard = null;
+  secondCard = null;
+  lockBoard = false;
+  erros = 0;
+  pares = 0;
+  level = 1;
+  document.querySelector("#erros").textContent = "Erros: 0";
+  document.querySelector("#levelInfo").textContent = "Nível: 1";
+  const msg = document.querySelector("#vitoriaMessage");
+  if (msg) msg.remove();
+  gameBoard.innerHTML = "";
+  document.querySelector("#resetButton").style.display = "none";
+  document.querySelector("#nextButton").style.display = "none";
+  criarCartas();
+}
+// Função para verificar se o jogador completou o nível atual, exibindo uma mensagem de vitória e opções para avançar ou reiniciar o jogo;
 function verificarVitoria() {
-    if (pares === cartas.length / 2) {
-        const vitoriaMessage = document.createElement('h1');
-        vitoriaMessage.id = 'vitoriaMessage'; 
-        vitoriaMessage.textContent = 'Parabéns! Você venceu o jogo!';
-        document.body.appendChild(vitoriaMessage);
-        document.querySelector('#resetButton').style.display = 'block';
+  const config = niveis[level - 1];
+  if (pares === config.pares) {
+    const vitoriaMessage = document.createElement("h1");
+    vitoriaMessage.id = "vitoriaMessage";
+    if (level === 5) {
+      vitoriaMessage.textContent = "Parabéns! Você zerou o jogo! 🏆";
+      document.querySelector("#resetButton").style.display = "block";
+    } else {
+      vitoriaMessage.textContent = "Nível " + level + " completo! 🎉";
+      document.querySelector("#nextButton").style.display = "block";
     }
+    document.body.appendChild(vitoriaMessage);
+  }
 }
-embaralharCartas();
+
 criarCartas();
