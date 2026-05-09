@@ -7,6 +7,7 @@ body {
   background-color: #0a0a0a;
   min-height: 100vh;
   font-family: "Courier New", monospace;
+  overflow-x: hidden;
 }
 h1 {
   color: #fff;
@@ -144,14 +145,14 @@ h1 {
     font-size: 14px;
   }
   #gameBoard {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 6px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
     padding: 10px;
-    max-width: 400px;
+    max-width: 320px;
   }
   .carta {
-    height: 100px;
-    font-size: 30px;
+    height: 80px;
+    font-size: 24px;
   }
   #nextButton,
   #resetButton {
@@ -159,7 +160,38 @@ h1 {
     font-size: 14px;
   }
   #vitoriaMessage {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 360px) {
+  h1 {
     font-size: 24px;
+    padding: 10px;
+  }
+  #levelInfo {
+    font-size: 14px;
+  }
+  #erros {
+    font-size: 12px;
+  }
+  #gameBoard {
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 4px;
+    padding: 8px;
+    max-width: 280px;
+  }
+  .carta {
+    height: 60px;
+    font-size: 18px;
+  }
+  #nextButton,
+  #resetButton {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  #vitoriaMessage {
+    font-size: 16px;
   }
 }
 #nextButton,
