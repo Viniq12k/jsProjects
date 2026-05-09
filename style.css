@@ -1,27 +1,37 @@
 * {
-  padding: 0;
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
 }
 
 body {
   min-height: 100vh;
-  overflow-x: hidden;
   background-color: #0a0a0a;
   color: #fff;
   font-family: "Courier New", monospace;
-  padding: 24px 0 32px;
+  padding: 24px 12px 32px;
 }
+
+/* TITULO */
 
 h1 {
   color: #fff;
   font-size: clamp(2rem, 10vw, 3.75rem);
   text-align: center;
   padding: 8px 0 22px;
+
   text-shadow:
     0 0 10px #ff00ff,
     0 0 20px #ff00ff;
 }
+
+/* INFOS */
 
 #levelInfo,
 #erros {
@@ -32,6 +42,7 @@ h1 {
   color: #00ffcc;
   font-size: clamp(1rem, 4vw, 1.375rem);
   margin-bottom: 6px;
+
   text-shadow: 0 0 8px #00ffcc;
 }
 
@@ -39,32 +50,51 @@ h1 {
   color: #ff00ff;
   font-size: clamp(0.875rem, 3.5vw, 1.25rem);
   margin-bottom: 18px;
+
   text-shadow: 0 0 8px #ff00ff;
 }
 
+/* TABULEIRO */
+
 #gameBoard {
   display: grid;
+
   grid-template-columns: repeat(
     auto-fit,
-    minmax(clamp(72px, 20vw, 150px), 1fr)
+    minmax(72px, 1fr)
   );
+
   gap: clamp(8px, 2vw, 12px);
-  width: min(calc(100% - 24px), 700px);
+
+  width: 100%;
+  max-width: 700px;
+
   margin: 0 auto;
+
   padding: clamp(8px, 3vw, 20px);
 }
 
+/* CARTAS */
+
 .carta {
   width: 100%;
+  min-width: 0;
+
   aspect-ratio: 1;
-  min-height: 0;
+
   background-color: #111;
+
   border: 2px solid #ff00ff;
   border-radius: 10px;
+
   color: #fff;
+
   font-size: clamp(1.75rem, 8vw, 3.125rem);
+
   cursor: pointer;
+
   box-shadow: 0 0 10px #ff00ff;
+
   transition:
     transform 0.2s,
     box-shadow 0.2s;
@@ -72,67 +102,102 @@ h1 {
 
 .carta:hover {
   transform: scale(1.04);
+
   box-shadow: 0 0 20px #ff00ff;
 }
 
+/* CARTAS IGUAIS */
+
 .iguais {
   border-color: #00ffcc;
-  box-shadow: 0 0 20px #00ffcc;
+
   background-color: #0a2a25;
+
+  box-shadow: 0 0 20px #00ffcc;
 }
+
+/* BOTÕES */
 
 #nextButton,
 #resetButton {
   display: none;
+
   width: min(100%, 260px);
+
   margin: 16px auto 0;
+
   padding: 12px 18px;
+
   background: transparent;
+
   font-family: "Courier New", monospace;
+
   font-size: clamp(0.875rem, 3.5vw, 1.125rem);
+
   cursor: pointer;
+
   border-radius: 8px;
+
   transition:
     background-color 0.2s,
     color 0.2s,
     box-shadow 0.2s;
 }
 
+/* NEXT BUTTON */
+
 #nextButton {
   border: 2px solid #00ffcc;
+
   color: #00ffcc;
+
   box-shadow: 0 0 10px #00ffcc;
 }
 
 #nextButton:hover {
   background: #00ffcc;
+
   color: #000;
 }
 
+/* RESET BUTTON */
+
 #resetButton {
   border: 2px solid #ff00ff;
+
   color: #ff00ff;
+
   box-shadow: 0 0 10px #ff00ff;
 }
 
 #resetButton:hover {
   background: #ff00ff;
+
   color: #000;
 }
 
+/* MENSAGEM */
+
 #vitoriaMessage {
   color: #00ffcc;
+
   font-size: clamp(1.25rem, 7vw, 2.5rem);
+
   text-align: center;
+
   padding: 20px 8px 0;
+
   text-shadow: 0 0 15px #00ffcc;
 }
 
+/* MOBILE */
+
 @media (max-width: 420px) {
   #gameBoard {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+
     max-width: 320px;
+
     padding: 0;
   }
 
