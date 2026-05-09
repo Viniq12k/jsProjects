@@ -10,7 +10,7 @@ body {
   background-color: #0a0a0a;
   color: #fff;
   font-family: "Courier New", monospace;
-  padding: 24px 12px 32px;
+  padding: 24px 0 32px;
 }
 
 h1 {
@@ -49,7 +49,7 @@ h1 {
     minmax(clamp(72px, 20vw, 150px), 1fr)
   );
   gap: clamp(8px, 2vw, 12px);
-  width: min(100%, 700px);
+  width: min(calc(100% - 24px), 700px);
   margin: 0 auto;
   padding: clamp(8px, 3vw, 20px);
 }
@@ -129,12 +129,14 @@ h1 {
 }
 
 @media (max-width: 420px) {
-  body {
-    padding-inline: 8px;
-  }
-
   #gameBoard {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
     max-width: 320px;
+    padding: 0;
+  }
+
+  .carta:hover {
+    transform: none;
   }
 }
