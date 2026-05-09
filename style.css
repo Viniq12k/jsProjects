@@ -55,7 +55,7 @@ h1 {
 #gameBoard {
   display: grid;
 
-  /* desktop = 4 cartas */
+  /* SEMPRE 4 COLUNAS */
   grid-template-columns: repeat(4, 1fr);
 
   gap: 12px;
@@ -93,10 +93,14 @@ h1 {
     box-shadow 0.2s;
 }
 
-.carta:hover {
-  transform: scale(1.05);
+/* hover apenas desktop */
 
-  box-shadow: 0 0 20px #ff00ff;
+@media (hover: hover) {
+  .carta:hover {
+    transform: scale(1.05);
+
+    box-shadow: 0 0 20px #ff00ff;
+  }
 }
 
 .iguais {
@@ -109,10 +113,16 @@ h1 {
 
 /* BOTÕES */
 
+#nextButton {
+  display: none;
+}
+
+#resetButton {
+  display: block;
+}
+
 #nextButton,
 #resetButton {
-  display: none;
-
   margin: 20px auto;
 
   padding: 12px 30px;
@@ -180,13 +190,17 @@ h1 {
   }
 
   #gameBoard {
-    grid-template-columns: repeat(3, 1fr);
-
     max-width: 500px;
+
+    gap: 10px;
   }
 
   .carta {
-    font-size: 38px;
+    font-size: 32px;
+  }
+
+  #vitoriaMessage {
+    font-size: 30px;
   }
 }
 
@@ -208,17 +222,18 @@ h1 {
   }
 
   #gameBoard {
-    grid-template-columns: repeat(2, 1fr);
+    /* continua 4 colunas */
+    grid-template-columns: repeat(4, 1fr);
 
-    max-width: 320px;
+    max-width: 100%;
 
-    gap: 8px;
+    gap: 6px;
 
     padding: 10px;
   }
 
   .carta {
-    font-size: 28px;
+    font-size: 20px;
   }
 
   #nextButton,
@@ -229,22 +244,30 @@ h1 {
   }
 
   #vitoriaMessage {
-    font-size: 24px;
+    font-size: 22px;
   }
 }
 
 /* CELULAR PEQUENO */
 
 @media (max-width: 360px) {
+  h1 {
+    font-size: 24px;
+  }
+
   #gameBoard {
-    max-width: 260px;
+    gap: 4px;
+
+    padding: 6px;
   }
 
   .carta {
-    font-size: 22px;
+    font-size: 16px;
+
+    border-width: 1px;
   }
 
-  h1 {
-    font-size: 24px;
+  #vitoriaMessage {
+    font-size: 18px;
   }
 }

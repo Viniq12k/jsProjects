@@ -123,7 +123,6 @@ function reiniciarJogo() {
   const msg = document.querySelector("#vitoriaMessage");
   if (msg) msg.remove();
   gameBoard.innerHTML = "";
-  document.querySelector("#resetButton").style.display = "none";
   document.querySelector("#nextButton").style.display = "none";
   criarCartas();
 }
