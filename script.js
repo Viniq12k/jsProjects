@@ -144,3 +144,4 @@ function verificarVitoria() {
 }
 
 criarCartas();
+//Fim do código.
