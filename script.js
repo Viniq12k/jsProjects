@@ -90,9 +90,9 @@ function criarCartas() {
       } else {
         secondCard = carta;
         verificarPar();
-      }
-    });
-  }
+   }
+ });
+}
 
   // Revela todas as cartas no início
   lockBoard = true;
