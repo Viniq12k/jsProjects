@@ -90,9 +90,22 @@ function criarCartas() {
       } else {
         secondCard = carta;
         verificarPar();
-      }
-    });
+   }
+ });
+}
+
+  // Revela todas as cartas no início
+  lockBoard = true;
+  const todasCartas = document.querySelectorAll(".carta");
+  for (let i = 0; i < todasCartas.length; i++) {
+    todasCartas[i].textContent = todasCartas[i].dataset.value;
   }
+  setTimeout(() => {
+    for (let i = 0; i < todasCartas.length; i++) {
+      todasCartas[i].textContent = "?";
+    }
+    lockBoard = false;
+  }, 2000);
 }
 // Função para avançar para o próximo nível, resetando o tabuleiro e atualizando as informações do jogo;
 function proximoNivel() {
@@ -144,4 +157,3 @@ function verificarVitoria() {
 }
 
 criarCartas();
-//Fim do código.
