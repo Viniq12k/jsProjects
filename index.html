@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Memory Game</title>
 </head>
-
 <body>
-    <!--Titulo do jogo-->
     <h1>Memory Game</h1>
-    <!--Mostrador de nivel atual-->
     <p id="levelInfo">Nível: 1</p>
-    <!--Mostrador de erros cometidos-->
     <p id="erros">Erros: 0</p>
-    <!--Bloco com as cartas do game-->
     <div id="gameBoard"></div>
-    <!--Botões para avançar de nível e reiniciar o jogo-->
-    <button id="nextButton">Próximo Nível →</button>
-    <button id="resetButton">Reiniciar Jogo</button>
+
+    <!-- Modal de vitória -->
+    <div id="modal" class="modal-hidden">
+        <div id="modalBox">
+            <h2 id="modalMsg"></h2>
+            <button id="nextButton">Próximo Nível →</button>
+            <button id="resetButton">Reiniciar Jogo</button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
-
 </html>
