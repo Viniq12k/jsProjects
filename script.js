@@ -105,7 +105,7 @@ function criarCartas() {
       todasCartas[i].textContent = "?";
     }
     lockBoard = false;
-  }, 2000);
+  }, 4000);
 }
 // Função para avançar para o próximo nível, resetando o tabuleiro e atualizando as informações do jogo;
 function proximoNivel() {
